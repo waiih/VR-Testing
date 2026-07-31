@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "VR Testing.sln"
+    "dotnet.defaultSolution": "VR-Testing.sln"
 }
