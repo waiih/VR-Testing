@@ -127,6 +127,7 @@ MonoBehaviour:
   destroyTimer: 2
   shotPower: 2000
   ejectPower: 250
+  ammoCapacity: 7
 --- !u!54 &1733175691990913932
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -484,5 +485,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.023667574, y: 0.08354268, z: 0.053215258}
-  m_Center: {x: -0.017823458, y: 0.04250216, z: 0.008284081}
+  m_Size: {x: 0.009909511, y: 0.073092565, z: 0.03230085}
+  m_Center: {x: -0.000012099743, y: 0.037277102, z: -0.0021731574}
