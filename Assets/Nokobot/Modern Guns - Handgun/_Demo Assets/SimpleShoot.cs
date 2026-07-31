@@ -19,6 +19,8 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Specify time to destory the casing object")] [SerializeField] private float destroyTimer = 2f;
     [Tooltip("Bullet Speed")] [SerializeField] private float shotPower = 500f;
     [Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
+    [Tooltip("Ammo capacity")] [SerializeField] private int ammoCapacity = 7;
+    [Tooltip("Current ammo")] private int ammo = 7;
 
 
     void Start()
@@ -34,6 +36,11 @@ public class SimpleShoot : MonoBehaviour
     //This function creates the bullet behavior
     public void Shoot()
     {
+        if (ammo <= 0)
+        {
+            OnEmptyShoot();
+            return;
+        }
 
         if (muzzleFlashPrefab)
         {
@@ -56,7 +63,18 @@ public class SimpleShoot : MonoBehaviour
 
         CasingRelease();
 
+        ammo--;
         Destroy(bullet, 1.0f);
+    }
+
+    void OnEmptyShoot()
+    {
+        // TODO
+    }
+
+    public void Reload()
+    {
+        ammo = ammoCapacity;
     }
 
     //This function creates a casing at the ejection slot
