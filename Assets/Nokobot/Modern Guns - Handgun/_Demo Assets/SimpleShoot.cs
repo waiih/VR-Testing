@@ -22,6 +22,8 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Ammo capacity")] [SerializeField] private int ammoCapacity = 7;
     [Tooltip("Current ammo")] private int ammo = 7;
 
+    public bool magEmpty = false;
+    private bool chamberEmpty = false;
 
     void Start()
     {
@@ -32,15 +34,29 @@ public class SimpleShoot : MonoBehaviour
             gunAnimator = GetComponentInChildren<Animator>();
     }
 
+    public void Fire()
+    {
+        if (ammo <= 0 || chamberEmpty)
+        {
+            chamberEmpty = true;
+            OnEmptyShoot();
+            return;
+        }
+
+        if (magEmpty && ammo > 0)
+        {
+            ammo = 1;
+            gunAnimator.Play("Fire");
+            chamberEmpty = true;
+        } else {
+            gunAnimator.Play("Fire");
+        }
+    }
 
     //This function creates the bullet behavior
     public void Shoot()
     {
-        if (ammo <= 0)
-        {
-            OnEmptyShoot();
-            return;
-        }
+
 
         if (muzzleFlashPrefab)
         {
@@ -61,8 +77,6 @@ public class SimpleShoot : MonoBehaviour
         bullet = Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);
         bullet.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
 
-        CasingRelease();
-
         ammo--;
         Destroy(bullet, 1.0f);
     }
@@ -74,7 +88,9 @@ public class SimpleShoot : MonoBehaviour
 
     public void Reload()
     {
-        ammo = ammoCapacity;
+        chamberEmpty = false;
+        ammo += ammoCapacity;
+        Debug.Log("Reloaded: " + ammo);
     }
 
     //This function creates a casing at the ejection slot
