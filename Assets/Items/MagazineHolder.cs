@@ -9,6 +9,7 @@ public class MagazineHolder : MonoBehaviour
         if (other.tag != "Mag" || transform.childCount > 0) return;
         Reloader reloader = other.GetComponent<Reloader>();
         if (reloader.isLoaded) return;
+        reloader.isDupe = false;
         Vector3 mag_location = transform.position;
         SimpleShoot gunScript = transform.parent.GetComponent<SimpleShoot>();
         

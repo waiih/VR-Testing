@@ -21,9 +21,11 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f;
     [Tooltip("Ammo capacity")] [SerializeField] private int ammoCapacity = 7;
     [Tooltip("Current ammo")] private int ammo = 7;
+    [Tooltip("Firerate in ms/shot")] [SerializeField] private float firerate = 100f;
+    private bool cooldown = false;
 
     public bool magEmpty = false;
-    private bool chamberEmpty = false;
+    private bool isChambered = false;
 
     void Start()
     {
@@ -36,9 +38,11 @@ public class SimpleShoot : MonoBehaviour
 
     public void Fire()
     {
-        if (ammo <= 0 || chamberEmpty)
+        if (cooldown) return;
+        
+        if (ammo <= 0 || !isChambered)
         {
-            chamberEmpty = true;
+            isChambered = false;
             OnEmptyShoot();
             return;
         }
@@ -47,10 +51,13 @@ public class SimpleShoot : MonoBehaviour
         {
             ammo = 1;
             gunAnimator.Play("Fire");
-            chamberEmpty = true;
+            isChambered = false;
         } else {
             gunAnimator.Play("Fire");
         }
+
+        cooldown = true;
+        StartCoroutine(FireCooldown());
     }
 
     //This function creates the bullet behavior
@@ -88,9 +95,19 @@ public class SimpleShoot : MonoBehaviour
 
     public void Reload()
     {
-        chamberEmpty = false;
         ammo += ammoCapacity;
         Debug.Log("Reloaded: " + ammo);
+    }
+
+    public void AnimateChamber()
+    {
+        if (isChambered) return;
+        gunAnimator.Play("Chamber");
+    }
+
+    public void Chamber()
+    {
+        isChambered = true;
     }
 
     //This function creates a casing at the ejection slot
@@ -112,4 +129,9 @@ public class SimpleShoot : MonoBehaviour
         Destroy(tempCasing, destroyTimer);
     }
 
+    IEnumerator FireCooldown()
+    {
+        yield return new WaitForSeconds(firerate / 1000f);
+        cooldown = false;
+    }
 }

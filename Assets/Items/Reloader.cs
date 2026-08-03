@@ -7,9 +7,11 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class Reloader : MonoBehaviour
 {
-    public bool isLoaded = true;
+    [SerializeField] public bool isDupe = false;
+    [SerializeField] public bool isLoaded = true;
     private bool destroying = false;
     private bool canEmpty = true;
+    
     public void Empty(SimpleShoot gun)
     {
         if (destroying || !isLoaded || !canEmpty) return;
@@ -35,6 +37,12 @@ public class Reloader : MonoBehaviour
 
 
         StartCoroutine(EmptyOut(1.5f));
+    }
+
+    public void OnDeselect()
+    {
+        if (!isDupe) return;
+        Destroy(gameObject, 0.5f);
     }
 
     public void Reload(SimpleShoot forGun, Vector3 location, Transform mag_loc)
