@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5659460047397131968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8924403457487836191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7981052588953722156}
+  m_Layer: 0
+  m_Name: GrabTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7981052588953722156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8924403457487836191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0138, y: 0.0609, z: -0.0113}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5659460047397131970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3022512795309831714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,6 +252,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3036919534618684879, guid: 5c59210965ffbcc4093fe99a29edb777, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1267406449795952458, guid: 5c59210965ffbcc4093fe99a29edb777, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7981052588953722156}
     - targetCorrespondingSourceObject: {fileID: 1267406449795952456, guid: 5c59210965ffbcc4093fe99a29edb777, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8580921044856004636}
@@ -439,6 +473,9 @@ MonoBehaviour:
   shotPower: 2000
   ejectPower: 250
   ammoCapacity: 7
+  firerate: 100
+  damage: 34
+  headshotMultiplier: 1.5
   magEmpty: 0
 --- !u!54 &2459742278616895299
 Rigidbody:
@@ -552,7 +589,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 7981052588953722156}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -626,6 +663,11 @@ BoxCollider:
 --- !u!4 &5659460047397131968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1267406449795952456, guid: 5c59210965ffbcc4093fe99a29edb777, type: 3}
+  m_PrefabInstance: {fileID: 6853576616371517832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5659460047397131970 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1267406449795952458, guid: 5c59210965ffbcc4093fe99a29edb777, type: 3}
   m_PrefabInstance: {fileID: 6853576616371517832}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5659460047397131974 stripped

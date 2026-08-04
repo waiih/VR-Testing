@@ -8,6 +8,9 @@ TagManager:
   - Mag
   - Pistol Magazine
   - Board
+  - Bullet
+  - Zombie
+  - ZombieHead
   layers:
   - Default
   - TransparentFX
