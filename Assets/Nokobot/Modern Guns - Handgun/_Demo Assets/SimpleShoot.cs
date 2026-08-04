@@ -98,6 +98,7 @@ public class SimpleShoot : MonoBehaviour
 
     public void Reload()
     {
+        if (ammo >= ammoCapacity) { ammo = ammoCapacity; return; }
         ammo += ammoCapacity;
         Debug.Log("Reloaded: " + ammo);
     }
