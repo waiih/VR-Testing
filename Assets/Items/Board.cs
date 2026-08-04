@@ -18,10 +18,14 @@ public class Board : MonoBehaviour
     }
     public void Construct(Transform pos)
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
         transform.position = pos.position;
         transform.rotation = pos.rotation;
         isConstructed = true;
     }
+
 
     public void OnGrab()
     {

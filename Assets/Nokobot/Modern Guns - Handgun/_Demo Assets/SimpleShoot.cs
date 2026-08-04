@@ -22,10 +22,12 @@ public class SimpleShoot : MonoBehaviour
     [Tooltip("Ammo capacity")] [SerializeField] private int ammoCapacity = 7;
     [Tooltip("Current ammo")] private int ammo = 7;
     [Tooltip("Firerate in ms/shot")] [SerializeField] private float firerate = 100f;
+    [SerializeField] public float damage = 34f;
+    [SerializeField] public float headshotMultiplier = 1.5f;
     private bool cooldown = false;
 
     public bool magEmpty = false;
-    private bool isChambered = false;
+    private bool isChambered = true;
 
     void Start()
     {
@@ -82,6 +84,7 @@ public class SimpleShoot : MonoBehaviour
         GameObject bullet;
         // Create a bullet and add force on it in direction of the barrel
         bullet = Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);
+        bullet.GetComponent<Bullet>().shooter = this;
         bullet.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
 
         ammo--;

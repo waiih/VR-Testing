@@ -23,4 +23,10 @@ public class Window : MonoBehaviour
             Debug.Log("Object tagged as Board does not contain a board script.");
         }
     }
+
+    public void DestoryRandomBoard()
+    {
+        int randomIndex = Random.Range(0, attachedBoards.Length);
+        Destroy(attachedBoards[randomIndex].gameObject);
+    }
 }
