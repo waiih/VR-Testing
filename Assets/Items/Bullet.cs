@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
             if (zombie != null)
             {
                 zombie.health -= shooter.damage * shooter.headshotMultiplier;
+                Debug.Log("Headshot!");
             }
         }
     }

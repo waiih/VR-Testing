@@ -470,7 +470,7 @@ MonoBehaviour:
   barrelLocation: {fileID: 3800081415405343371}
   casingExitLocation: {fileID: 5659460047397131974}
   destroyTimer: 2
-  shotPower: 2000
+  shotPower: 750
   ejectPower: 250
   ammoCapacity: 7
   firerate: 100
