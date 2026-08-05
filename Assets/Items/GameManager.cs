@@ -5,6 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     public enum GameState
     {
         PLAYING,
@@ -58,21 +72,21 @@ public class GameManager : MonoBehaviour
 
     public void OnBunkerEnding()
     {
-        
+        Debug.Log("Bunker ending");
     }
 
     public void OnExfilEnding()
     {
-        
+        Debug.Log("Exfil ending");
     }
 
     public void OnCarEnding()
     {
-        
+        Debug.Log("Car ending");
     }
 
     public void OnExfilTimerEnd()
     {
-        
+        Debug.Log("Exfil Timer Ended! Get to the zone..");
     }
 }

@@ -8,12 +8,20 @@ public class Bunker : MonoBehaviour
     {
         if (other.tag != "KeyItem") return;
 
-        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.keyItemsCount++;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
         if (other.tag != "KeyItem") return;
 
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.keyItemsCount--;
+        }
     }
 }
