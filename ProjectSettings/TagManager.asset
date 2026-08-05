@@ -11,6 +11,9 @@ TagManager:
   - Bullet
   - Zombie
   - ZombieHead
+  - KeyItem
+  - Wrench
+  - Bunker
   layers:
   - Default
   - TransparentFX
