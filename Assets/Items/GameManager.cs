@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public readonly int MAX_HEALTH = 100;
 
     [Tooltip("For bunker ending; how many items inside the bunker area.")] public int keyItemsCount = 0;
-    public int itemsNeeded = 16;
+    public int itemsNeeded = 12;
     public float exfilTime = 600f;
     public bool playerInExfilZone = false;
 
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
     public void Damage(int damage)
     {
         if (invincTimer > 0) return;
-        
+
         invincTimer = INVINC_TIME;
         playerHealth -= Math.Max(0, damage);
         healthTimer = REGEN_TIME;
