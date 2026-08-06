@@ -33,11 +33,4 @@ public class Zombie : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.body.tag != "Player") return;
-
-        GameManager.Instance.Damage(damage);
-    }
 }
