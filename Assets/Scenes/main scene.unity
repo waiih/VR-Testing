@@ -2929,15 +2929,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d1a3ca0b88eea4da88d1c83e9d0837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 100
-  keyItemsCount: 0
+  maxHealth: 100
+  healthText: {fileID: 2042783589}
   itemsNeeded: 16
   exfilTime: 600
-  playerInExfilZone: 0
-  carFixed: 0
-  playerInCar: 0
-  gameState: 0
-  healthText: {fileID: 2042783589}
 --- !u!4 &525131974
 Transform:
   m_ObjectHideFlags: 0
@@ -13172,6 +13167,7 @@ GameObject:
   - component: {fileID: 2042783588}
   - component: {fileID: 2042783590}
   - component: {fileID: 2042783589}
+  - component: {fileID: 2042783591}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -13295,6 +13291,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042783587}
   m_CullTransparentMesh: 1
+--- !u!114 &2042783591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042783587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a13c39e1d1fb1478741ef215783a9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2069176801
 PrefabInstance:
   m_ObjectHideFlags: 0
