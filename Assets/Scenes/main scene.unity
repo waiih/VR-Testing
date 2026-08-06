@@ -3653,6 +3653,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfiniteMagazine
       objectReference: {fileID: 0}
+    - target: {fileID: 2733476362013243194, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733476362013243194, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3967128045373486192, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.1
