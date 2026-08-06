@@ -12,4 +12,4 @@ public class HealthUI : MonoBehaviour
             GameManager.Instance.RegisterHealthText(text);
         }
     }
-}
+}   

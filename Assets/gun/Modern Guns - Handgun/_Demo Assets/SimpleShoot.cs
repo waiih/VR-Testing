@@ -5,6 +5,13 @@ using UnityEngine;
 [AddComponentMenu("Nokobot/Modern Guns/Simple Shoot")]
 public class SimpleShoot : MonoBehaviour
 {
+    [Header("Sound")]
+    public AudioSource sfxSrc;
+    public AudioClip sfxShoot;
+    public AudioClip sfxBlankShoot;
+    public AudioClip sfxChamber;
+
+
     [Header("Prefab Refrences")]
     public GameObject bulletPrefab;
     public GameObject casingPrefab;
@@ -36,6 +43,9 @@ public class SimpleShoot : MonoBehaviour
 
         if (gunAnimator == null)
             gunAnimator = GetComponentInChildren<Animator>();
+        
+        if (sfxSrc == null)
+            sfxSrc = GetComponent<AudioSource>();
     }
 
     public void Fire()
@@ -86,14 +96,15 @@ public class SimpleShoot : MonoBehaviour
         bullet = Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);
         bullet.GetComponent<Bullet>().shooter = this;
         bullet.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
-
+        sfxSrc.PlayOneShot(sfxShoot);
+        
         ammo--;
         Destroy(bullet, 1.0f);
     }
 
     void OnEmptyShoot()
     {
-        // TODO
+        sfxSrc.PlayOneShot(sfxBlankShoot);
     }
 
     public void Reload()
@@ -106,6 +117,7 @@ public class SimpleShoot : MonoBehaviour
     public void AnimateChamber()
     {
         if (isChambered) return;
+        sfxSrc.PlayOneShot(sfxChamber);
         gunAnimator.Play("Chamber");
     }
 
