@@ -14,7 +14,7 @@ public class ZombieSpawner : MonoBehaviour
 
     IEnumerator Spawn()
     {
-        Instantiate(zombiePrefab, transform);
+        Instantiate(zombiePrefab, transform.position, transform.rotation);
         yield return new WaitForSeconds(interval);
         StartCoroutine(Spawn());
     }
