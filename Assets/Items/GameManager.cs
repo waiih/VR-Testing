@@ -72,7 +72,8 @@ public class GameManager : MonoBehaviour
 
         if (playerHealth <= 0) {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentSceneIndex);    
+            SceneManager.LoadScene(currentSceneIndex);
+            playerHealth = MAX_HEALTH;
         }
 
         if (keyItemsCount == itemsNeeded)
