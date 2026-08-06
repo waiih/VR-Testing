@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    void OollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.body.tag == "Zombie")
         {
