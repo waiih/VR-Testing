@@ -34,9 +34,9 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.tag != "Player") return;
+        if (collision.body.tag != "Player") return;
 
         GameManager.Instance.Damage(damage);
     }
