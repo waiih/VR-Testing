@@ -104,8 +104,10 @@ public class GameManager : MonoBehaviour
         if (invincTimer > 0) return;
 
         invincTimer = INVINC_TIME;
-        playerHealth -= Math.Max(0, damage);
+        playerHealth -= damage;
         healthTimer = REGEN_TIME;
+
+        if (playerHealth < 0) playerHealth = 0;
     }
 
     public void OnBunkerEnding()
