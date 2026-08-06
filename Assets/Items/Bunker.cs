@@ -10,7 +10,7 @@ public class Bunker : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.keyItemsCount++;
+            GameManager.Instance.AddKeyItem();
         }
     }
 
@@ -21,7 +21,7 @@ public class Bunker : MonoBehaviour
         
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.keyItemsCount--;
+            GameManager.Instance.RemoveKeyItem();
         }
     }
 }

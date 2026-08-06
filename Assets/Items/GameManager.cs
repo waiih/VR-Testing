@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +6,42 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public enum GameState
+    {
+        PLAYING,
+        WON_ENDING_BUNKER,
+        WON_ENDING_EXTRACT,
+        WON_ENDING_CAR
+    }
+
+    [Header("Player Settings")]
+    [SerializeField] private int maxHealth = 100;
+    public int PlayerHealth { get; private set; }
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI healthText;
+
+    [Header("Game Rules")]
+    [SerializeField] private int itemsNeeded = 12;
+    [SerializeField] private float exfilTime = 600f;
+
+    public GameState CurrentState { get; private set; } = GameState.PLAYING;
+
+    // Trackers
+    public int KeyItemsCount { get; private set; }
+    public bool PlayerInExfilZone { get; set; }
+    public bool CarFixed { get; private set; }
+    public bool PlayerInCar { get; private set; }
+
+    // Timers
+    private float healthRegenDelayTimer = 0f;
+    private float regenTickTimer = 0f;
+    private float invincibilityTimer = 0f;
+
+    private const float REGEN_DELAY = 10f;
+    private const float REGEN_TICK_RATE = 0.5f; // Regenerates 1 HP every 0.5s after delay
+    private const float INVINC_TIME = 0.3f;
 
     private void Awake()
     {
@@ -19,115 +53,151 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        PlayerHealth = maxHealth;
     }
 
-    public enum GameState
+    private void Start()
     {
-        PLAYING,
-        WON_ENDING_BUNKER,
-        WON_ENDING_EXTRACT,
-        WON_ENDING_CAR
+        UpdateHealthUI();
     }
-    public int playerHealth = 100;
-    public readonly int MAX_HEALTH = 100;
 
-    [Tooltip("For bunker ending; how many items inside the bunker area.")] public int keyItemsCount = 0;
-    public int itemsNeeded = 12;
-    public float exfilTime = 600f;
-    public bool playerInExfilZone = false;
-
-    public bool carFixed = false;
-    public bool playerInCar = false;
-    
-    public GameState gameState = GameState.PLAYING;
-    public TextMeshProUGUI healthText;
-
-    private float healthTimer = 0f;
-    private float invincTimer = 0f;
-    private readonly float REGEN_TIME = 10f;
-    private readonly float INVINC_TIME = 0.3f;
-
-
-    void Update()
+    private void Update()
     {
-        if (invincTimer > 0)
-        {
-            invincTimer -= Time.deltaTime;
-        }
+        if (CurrentState != GameState.PLAYING) return;
 
-        if (healthTimer > 0)
-        {
-            healthTimer -= Time.deltaTime;
-        }
+        HandleTimers();
+        HandleHealthRegen();
+        CheckExfilWinCondition();
+    }
+
+
+    private void HandleTimers()
+    {
+        if (invincibilityTimer > 0) invincibilityTimer -= Time.deltaTime;
+        if (healthRegenDelayTimer > 0) healthRegenDelayTimer -= Time.deltaTime;
 
         if (exfilTime > 0)
         {
             exfilTime -= Time.deltaTime;
+            if (exfilTime <= 0)
+            {
+                Debug.Log("Exfil Timer Ended! Get to the zone..");
+            }
         }
+    }
 
-        if (healthTimer <= 0 && playerHealth < MAX_HEALTH)
+    private void HandleHealthRegen()
+    {
+        if (healthRegenDelayTimer <= 0 && PlayerHealth < maxHealth)
         {
-            playerHealth += 1;
-        }
-
-        if (playerHealth <= 0) {
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentSceneIndex);
-            playerHealth = MAX_HEALTH;
-        }
-
-        if (keyItemsCount == itemsNeeded)
-        {
-            gameState = GameState.WON_ENDING_BUNKER;
-            OnBunkerEnding();
-        }
-
-        if (exfilTime <= 0 && playerInExfilZone)
-        {
-            gameState = GameState.WON_ENDING_EXTRACT;
-            OnExfilEnding();
-        }
-        
-        if (carFixed && playerInCar)
-        {
-            gameState = GameState.WON_ENDING_CAR;
-            OnCarEnding();
-        }
-
-        if (healthText)
-        {
-            healthText.text = playerHealth + " HP"; 
+            regenTickTimer += Time.deltaTime;
+            if (regenTickTimer >= REGEN_TICK_RATE)
+            {
+                regenTickTimer = 0f;
+                Heal(1);
+            }
         }
     }
 
     public void Damage(int damage)
     {
-        if (invincTimer > 0) return;
+        if (invincibilityTimer > 0 || CurrentState != GameState.PLAYING) return;
 
-        invincTimer = INVINC_TIME;
-        playerHealth -= damage;
-        healthTimer = REGEN_TIME;
+        invincibilityTimer = INVINC_TIME;
+        healthRegenDelayTimer = REGEN_DELAY;
+        regenTickTimer = 0f;
 
-        if (playerHealth < 0) playerHealth = 0;
+        PlayerHealth = Mathf.Max(0, PlayerHealth - damage);
+        UpdateHealthUI();
+
+        if (PlayerHealth <= 0)
+        {
+            RestartGame();
+        }
     }
 
-    public void OnBunkerEnding()
+    public void Heal(int amount)
     {
-        Debug.Log("Bunker ending");
+        PlayerHealth = Mathf.Min(maxHealth, PlayerHealth + amount);
+        UpdateHealthUI();
     }
 
-    public void OnExfilEnding()
+    public void AddKeyItem()
     {
-        Debug.Log("Exfil ending");
+        KeyItemsCount++;
+        if (KeyItemsCount >= itemsNeeded)
+        {
+            TriggerEnding(GameState.WON_ENDING_BUNKER);
+        }
     }
 
-    public void OnCarEnding()
+    public void RemoveKeyItem()
     {
-        Debug.Log("Car ending");
+        KeyItemsCount = Math.Max(0, KeyItemsCount - 1);
     }
 
-    public void OnExfilTimerEnd()
+    public void SetCarFixed(bool status)
     {
-        Debug.Log("Exfil Timer Ended! Get to the zone..");
+        CarFixed = status;
+        CheckCarEnding();
+    }
+
+    public void SetPlayerInCar(bool status)
+    {
+        PlayerInCar = status;
+        CheckCarEnding();
+    }
+
+
+    private void CheckExfilWinCondition()
+    {
+        if (exfilTime <= 0 && PlayerInExfilZone)
+        {
+            TriggerEnding(GameState.WON_ENDING_EXTRACT);
+        }
+    }
+
+    private void CheckCarEnding()
+    {
+        if (CarFixed && PlayerInCar)
+        {
+            TriggerEnding(GameState.WON_ENDING_CAR);
+        }
+    }
+
+    private void TriggerEnding(GameState newEndingState)
+    {
+        if (CurrentState != GameState.PLAYING) return;
+
+        CurrentState = newEndingState;
+
+        switch (CurrentState)
+        {
+            case GameState.WON_ENDING_BUNKER:
+                Debug.Log("Bunker ending");
+                break;
+            case GameState.WON_ENDING_EXTRACT:
+                Debug.Log("Exfil ending");
+                break;
+            case GameState.WON_ENDING_CAR:
+                Debug.Log("Car ending");
+                break;
+        }
+    }
+
+    private void RestartGame()
+    {
+        PlayerHealth = maxHealth;
+        UpdateHealthUI();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (healthText != null)
+        {
+            healthText.text = $"{PlayerHealth} HP";
+        }
     }
 }
