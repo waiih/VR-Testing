@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         WON_ENDING_CAR
     }
     public int playerHealth = 100;
+    public readonly int MAX_HEALTH = 100;
 
     [Tooltip("For bunker ending; how many items inside the bunker area.")] public int keyItemsCount = 0;
     public int itemsNeeded = 16;
@@ -40,12 +42,32 @@ public class GameManager : MonoBehaviour
     public GameState gameState = GameState.PLAYING;
     public TextMeshProUGUI healthText;
 
+    private float healthTimer = 0f;
+    private float invincTimer = 0f;
+    private readonly float REGEN_TIME = 10f;
+    private readonly float INVINC_TIME = 0.3f;
+
 
     void Update()
     {
+        if (invincTimer > 0)
+        {
+            invincTimer -= Time.deltaTime;
+        }
+
+        if (healthTimer > 0)
+        {
+            healthTimer -= Time.deltaTime;
+        }
+
         if (exfilTime > 0)
         {
             exfilTime -= Time.deltaTime;
+        }
+
+        if (healthTimer <= 0 && playerHealth < MAX_HEALTH)
+        {
+            playerHealth += 1;
         }
 
         if (playerHealth <= 0) {
@@ -75,7 +97,16 @@ public class GameManager : MonoBehaviour
         {
             healthText.text = playerHealth + " HP"; 
         }
-    } 
+    }
+
+    public void Damage(int damage)
+    {
+        if (invincTimer > 0) return;
+        
+        invincTimer = INVINC_TIME;
+        playerHealth -= Math.Max(0, damage);
+        healthTimer = REGEN_TIME;
+    }
 
     public void OnBunkerEnding()
     {

@@ -9,6 +9,7 @@ public class Zombie : MonoBehaviour
     private Transform player;
 
     public float health = 100f;
+    public int damage = 20;
 
     void Start()
     {
@@ -31,5 +32,12 @@ public class Zombie : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != "Player") return;
+
+        GameManager.Instance.Damage(damage);
     }
 }

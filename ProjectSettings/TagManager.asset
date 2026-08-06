@@ -18,7 +18,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Navmesh Proxy
   - Water
   - UI
   - PistolBullet
