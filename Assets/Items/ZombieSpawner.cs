@@ -5,7 +5,7 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     public GameObject zombiePrefab;
-    public float interval = 5f;
+    public float interval = 30f;
 
     void Start()
     {
