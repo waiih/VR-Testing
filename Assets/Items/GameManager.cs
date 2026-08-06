@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
 
     [Header("Game Rules")]
-    [SerializeField] private int itemsNeeded = 12;
+    [SerializeField] private int itemsNeeded = 2;
     [SerializeField] private float exfilTime = 600f;
 
     public GameState CurrentState { get; private set; } = GameState.PLAYING;
