@@ -3969,6 +3969,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 2594713235063479161, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8442262470655759370, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9973311
@@ -3981,31 +3985,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 8.374
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2594713235063479161, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2594713235057194463, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2594713235057194439, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 751249474}
+      addedObject: {fileID: 751249484}
   m_SourcePrefab: {fileID: 100100000, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
 --- !u!4 &751249471 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2594713235056830955, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
   m_PrefabInstance: {fileID: 751249470}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &751249472 stripped
+--- !u!1 &751249473 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2594713235057194463, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2594713235057194439, guid: 0b26cd811d173394ea7ee69051b77c63, type: 3}
   m_PrefabInstance: {fileID: 751249470}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &751249474
+--- !u!114 &751249484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751249472}
+  m_GameObject: {fileID: 751249473}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
@@ -4026,9 +4031,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 459e044c9d8be9e4288c05d062cb4bc2, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c15c00899176cb14690a56b4b1949b8d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &751892842
 PrefabInstance:
