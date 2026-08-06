@@ -123,6 +123,12 @@ public class GameManager : MonoBehaviour
         UpdateHealthUI();
     }
 
+    public void RegisterHealthText(TextMeshProUGUI textComponent)
+    {
+        healthText = textComponent;
+        UpdateHealthUI(); 
+    }
+
     public void AddKeyItem()
     {
         KeyItemsCount++;
