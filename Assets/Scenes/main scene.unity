@@ -2749,7 +2749,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7054646180837666701, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
@@ -2931,7 +2932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthText: {fileID: 2042783589}
-  itemsNeeded: 16
+  itemsNeeded: 2
   exfilTime: 600
 --- !u!4 &525131974
 Transform:
@@ -3786,11 +3787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2733476362013243194, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2733476362013243194, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3967128045373486192, guid: 9dc4458fca0e26c4abf337afe1148c94, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4799,7 +4800,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
