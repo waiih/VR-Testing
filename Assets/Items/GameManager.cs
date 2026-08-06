@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public bool playerInCar = false;
     
     public GameState gameState = GameState.PLAYING;
+    public TextMeshProUGUI healthText;
 
 
     void Update()
@@ -68,7 +70,12 @@ public class GameManager : MonoBehaviour
             gameState = GameState.WON_ENDING_CAR;
             OnCarEnding();
         }
-    }
+
+        if (healthText)
+        {
+            healthText.text = playerHealth + " HP";
+        }
+    } 
 
     public void OnBunkerEnding()
     {
