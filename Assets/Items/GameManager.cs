@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (healthText)
         {
-            healthText.text = playerHealth + " HP";
+            healthText.text = playerHealth + " HP"; 
         }
     } 
 

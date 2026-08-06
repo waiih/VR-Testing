@@ -15,6 +15,14 @@ public class InfiniteMagazine : MonoBehaviour
             IXRSelectInteractor hand = interactor.firstInteractorSelecting;
             GameObject newMag = Instantiate(magazinePrefab);
             XRGrabInteractable newMagInteractable = newMag.GetComponent<XRGrabInteractable>();
+
+            Rigidbody rb = newMag.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.useGravity = true;
+                rb.isKinematic = false;
+            }
             
             if (newMagInteractable != null) {
                 interactor.interactionManager.SelectExit(hand, interactor);
