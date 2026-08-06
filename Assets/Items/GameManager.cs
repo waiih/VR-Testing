@@ -178,20 +178,28 @@ public class GameManager : MonoBehaviour
 
         CurrentState = newEndingState;
 
+        string endingMessage = "";
+
         switch (CurrentState)
         {
             case GameState.WON_ENDING_BUNKER:
-                Debug.Log("Bunker ending");
+                endingMessage = "BUNKER ENDING\n\nYou secured the bunker and survived the night.";
                 break;
+
             case GameState.WON_ENDING_EXTRACT:
-                Debug.Log("Exfil ending");
+                endingMessage = "EXFIL ENDING\n\nThe evacuation team picked you up in time.";
                 break;
+
             case GameState.WON_ENDING_CAR:
-                Debug.Log("Car ending");
+                endingMessage = "CAR ENDING\n\nYou fixed the car and escaped the house.";
                 break;
         }
-    }
 
+        if (EndingUI.Instance != null)
+        {
+            EndingUI.Instance.ShowEnding(endingMessage);
+        }
+    }
     private void RestartGame()
     {
         PlayerHealth = maxHealth;
