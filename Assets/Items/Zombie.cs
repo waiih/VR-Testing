@@ -32,5 +32,10 @@ public class Zombie : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (GameManager.Instance.CurrentState != GameManager.GameState.PLAYING)
+        {
+            Destroy(gameObject);
+        }
     }
 }
