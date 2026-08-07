@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateHealthUI();
-        helicopter.SetActive(false);
     }
 
     private void Update()
@@ -263,5 +262,15 @@ public class GameManager : MonoBehaviour
         {
             fixedText.text = $"{(CarFixed ? "Fixed" : "Unfixed")}";
         }
+    }
+
+    public void RegisterFuelUI(TextMeshProUGUI c)
+    {
+        fuelText = c;
+    }
+
+    public void RegisterFixedUI(TextMeshProUGUI c)
+    {
+        fixedText = c;
     }
 }
