@@ -15,12 +15,19 @@ public class GameManager : MonoBehaviour
         WON_ENDING_CAR
     }
 
+    [Header("Ending Objects")]
+    public GameObject helicopter;
+
     [Header("Player Settings")]
     [SerializeField] private int maxHealth = 100;
     public int PlayerHealth { get; private set; }
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI fuelText;
+    [SerializeField] private TextMeshProUGUI fixedText;
+    
 
     [Header("Game Rules")]
     [SerializeField] private int itemsNeeded = 2;
@@ -43,6 +50,12 @@ public class GameManager : MonoBehaviour
     private const float REGEN_TICK_RATE = 0.5f; // Regenerates 1 HP every 0.5s after delay
     private const float INVINC_TIME = 0.3f;
 
+
+    private int carFuelCount = 0;
+    private int carFuelCapacity = 5;
+
+    public bool carFull => carFuelCount == carFuelCapacity;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -60,6 +73,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateHealthUI();
+        helicopter.SetActive(false);
     }
 
     private void Update()
@@ -80,6 +94,7 @@ public class GameManager : MonoBehaviour
         if (exfilTime > 0)
         {
             exfilTime -= Time.deltaTime;
+            UpdateTimerUI();
             if (exfilTime <= 0)
             {
                 Debug.Log("Exfil Timer Ended! Get to the zone..");
@@ -98,6 +113,23 @@ public class GameManager : MonoBehaviour
                 Heal(1);
             }
         }
+    }
+
+    public void FillCar()
+    {
+        if (!CarFixed) return;
+
+        carFuelCount++;
+        
+        if (carFull) {
+            TriggerEnding(GameState.WON_ENDING_CAR);
+        }
+        UpdateFuelUI();
+    }
+
+    public void SpawnHelicopterZone()
+    {
+        helicopter.SetActive(true);
     }
 
     public void Damage(int damage)
@@ -129,6 +161,12 @@ public class GameManager : MonoBehaviour
         UpdateHealthUI(); 
     }
 
+    public void RegisterTimerText(TextMeshProUGUI textComponent)
+    {
+        timerText = textComponent;
+
+    }
+
     public void AddKeyItem()
     {
         KeyItemsCount++;
@@ -146,16 +184,10 @@ public class GameManager : MonoBehaviour
     public void SetCarFixed(bool status)
     {
         CarFixed = status;
-        CheckCarEnding();
+        UpdateFixedUI();
     }
 
-    public void SetPlayerInCar(bool status)
-    {
-        PlayerInCar = status;
-        CheckCarEnding();
-    }
-
-
+  
     private void CheckExfilWinCondition()
     {
         if (exfilTime <= 0 && PlayerInExfilZone)
@@ -164,13 +196,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckCarEnding()
-    {
-        if (CarFixed && PlayerInCar)
-        {
-            TriggerEnding(GameState.WON_ENDING_CAR);
-        }
-    }
+
 
     private void TriggerEnding(GameState newEndingState)
     {
@@ -212,6 +238,30 @@ public class GameManager : MonoBehaviour
         if (healthText != null)
         {
             healthText.text = $"{PlayerHealth} HP";
+        }
+    }
+
+    private void UpdateTimerUI()
+    {
+        if (timerText != null)
+        {
+            timerText.text = $"{Mathf.RoundToInt(exfilTime)}s";
+        }
+    }
+
+    private void UpdateFuelUI()
+    {
+        if (fuelText != null)
+        {
+            fuelText.text = $"{carFuelCount}/3 fuel";
+        }
+    }
+
+    private void UpdateFixedUI()
+    {
+        if (fixedText != null)
+        {
+            fixedText.text = $"{(CarFixed ? "Fixed" : "Unfixed")}";
         }
     }
 }
