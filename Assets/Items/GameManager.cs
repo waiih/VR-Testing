@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI fuelText;
     [SerializeField] private TextMeshProUGUI fixedText;
+    [SerializeField] private TextMeshProUGUI bunkerText;
     
 
     [Header("Game Rules")]
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateHealthUI();
+        UpdateBunkerUI();
     }
 
     private void Update()
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
             UpdateTimerUI();
             if (exfilTime <= 0)
             {
+                SpawnHelicopterZone();  
                 Debug.Log("Exfil Timer Ended! Get to the zone..");
             }
         }
@@ -109,7 +112,7 @@ public class GameManager : MonoBehaviour
             if (regenTickTimer >= REGEN_TICK_RATE)
             {
                 regenTickTimer = 0f;
-                Heal(1);
+                Heal(2);
             }
         }
     }
@@ -169,6 +172,7 @@ public class GameManager : MonoBehaviour
     public void AddKeyItem()
     {
         KeyItemsCount++;
+        UpdateBunkerUI();
         if (KeyItemsCount >= itemsNeeded)
         {
             TriggerEnding(GameState.WON_ENDING_BUNKER);
@@ -178,6 +182,7 @@ public class GameManager : MonoBehaviour
     public void RemoveKeyItem()
     {
         KeyItemsCount = Math.Max(0, KeyItemsCount - 1);
+        UpdateBunkerUI();
     }
 
     public void SetCarFixed(bool status)
@@ -252,7 +257,7 @@ public class GameManager : MonoBehaviour
     {
         if (fuelText != null)
         {
-            fuelText.text = $"{carFuelCount}/3 fuel";
+            fuelText.text = $"{carFuelCount}/{carFuelCapacity} fuel";
         }
     }
 
@@ -264,6 +269,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void UpdateBunkerUI()
+    {
+        if (bunkerText != null)
+        {
+            bunkerText.text = $"{KeyItemsCount}/{itemsNeeded} carrots";
+        }
+    }
+
     public void RegisterFuelUI(TextMeshProUGUI c)
     {
         fuelText = c;
@@ -272,5 +285,10 @@ public class GameManager : MonoBehaviour
     public void RegisterFixedUI(TextMeshProUGUI c)
     {
         fixedText = c;
+    }
+
+    public void RegisterBunkerUI(TextMeshProUGUI c)
+    {
+        bunkerText = c;
     }
 }

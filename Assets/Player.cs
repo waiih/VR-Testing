@@ -10,5 +10,10 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.Damage(other.GetComponent<Zombie>().damage);
         }
+
+        if (other.gameObject.CompareTag("Helicopter"))
+        {
+            GameManager.Instance.PlayerInExfilZone = true;
+        }
     }
 }
