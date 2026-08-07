@@ -77,7 +77,11 @@ public class GameManager : MonoBehaviour
     {
         UpdateHealthUI();
         UpdateBunkerUI();
-    }
+
+        if (helicopter == null) {
+            helicopter = GameObject.FindWithTag("ParentHeli").GetComponentInChildren<Transform>(true).GetChild(0).gameObject;
+        }
+    }   
 
     private void Update()
     {
