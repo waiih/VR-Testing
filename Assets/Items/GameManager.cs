@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Rules")]
     [SerializeField] private int itemsNeeded = 2;
-    [SerializeField] private float exfilTime = 600f;
+    [SerializeField] private float exfilTime = 6f;
 
     public GameState CurrentState { get; private set; } = GameState.PLAYING;
 
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         if (!CarFixed) return;
 
         carFuelCount++;
-        
+
         if (carFull) {
             TriggerEnding(GameState.WON_ENDING_CAR);
         }
