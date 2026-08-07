@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     public bool PlayerInExfilZone { get; set; }
     public bool CarFixed { get; private set; }
     public bool PlayerInCar { get; private set; }
+    private bool won = false;
+    private bool winState => CurrentState == GameState.WON_ENDING_BUNKER || CurrentState == GameState.WON_ENDING_EXTRACT || CurrentState == GameState.WON_ENDING_CAR;
 
     // Timers
     private float healthRegenDelayTimer = 0f;
@@ -79,11 +81,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (winState && !won) OnWin();
         if (CurrentState != GameState.PLAYING) return;
 
         HandleTimers();
         HandleHealthRegen();
         CheckExfilWinCondition();
+    }
+
+    private void OnWin()
+    {
+        won = true;
+        helicopter.SetActive(false);
     }
 
 
